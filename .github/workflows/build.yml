@@ -22,17 +22,16 @@ jobs:
     - name: Download J2ME Libraries (CLDC & MIDP)
       run: |
         mkdir -p lib
-        # Descargar las librerías oficiales de J2ME desde Maven Central
-        curl -L -o lib/cldcapi11.jar https://repo1.maven.org/maven2/net/sf/microemulator/cldcapi11/2.0.3/cldcapi11-2.0.3.jar
-        curl -L -o lib/midpapi20.jar https://repo1.maven.org/maven2/net/sf/microemulator/midpapi20/2.0.3/midpapi20-2.0.3.jar
+        curl -sL -o lib/cldcapi11.jar https://repo1.maven.org/maven2/net/sf/microemulator/cldcapi11/2.0.3/cldcapi11-2.0.3.jar
+        curl -sL -o lib/midpapi20.jar https://repo1.maven.org/maven2/net/sf/microemulator/midpapi20/2.0.3/midpapi20-2.0.3.jar
 
     - name: Compile and Build JAR
       run: |
         mkdir -p build/classes
         
-        # Compilar usando las librerías J2ME en el bootclasspath
+        # Incluir rt.jar de Java 8 junto con las librerías J2ME en el bootclasspath
         javac -source 1.3 -target 1.3 \
-          -bootclasspath lib/cldcapi11.jar:lib/midpapi20.jar \
+          -bootclasspath /usr/lib/jvm/temurin-8-jdk-amd64/jre/lib/rt.jar:lib/cldcapi11.jar:lib/midpapi20.jar \
           -d build/classes src/*.java
 
         # Crear archivo JAR con su manifiesto
