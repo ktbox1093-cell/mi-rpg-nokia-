@@ -1,5 +1,7 @@
-import javax.microedition.midlet.*;
-import javax.microedition.lcdui.*;
+package src;
+
+import javax.microedition.midlet.MIDlet;
+import javax.microedition.lcdui.Display;
 
 public class MainMIDlet extends MIDlet {
     private GameCanvasExample canvas;
@@ -21,4 +23,3 @@ public class MainMIDlet extends MIDlet {
         canvas.stop();
     }
 }
-
