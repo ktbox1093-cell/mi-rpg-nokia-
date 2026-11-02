@@ -1,0 +1,6 @@
+MIDlet-Name: OpenWorld RPG
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: Developer
+MIDlet-1: OpenWorld RPG, /icon.png, MainMIDlet
+MicroEdition-Profile: MIDP-2.0
+MicroEdition-Configuration: CLDC-1.1
