@@ -19,12 +19,21 @@ jobs:
         distribution: 'temurin'
         java-version: '8'
 
+    - name: Download J2ME Libraries (CLDC & MIDP)
+      run: |
+        mkdir -p lib
+        # Descargar las librerías oficiales de J2ME desde Maven Central
+        curl -L -o lib/cldcapi11.jar https://repo1.maven.org/maven2/net/sf/microemulator/cldcapi11/2.0.3/cldcapi11-2.0.3.jar
+        curl -L -o lib/midpapi20.jar https://repo1.maven.org/maven2/net/sf/microemulator/midpapi20/2.0.3/midpapi20-2.0.3.jar
+
     - name: Compile and Build JAR
       run: |
         mkdir -p build/classes
-        # Compilar código fuente para CLDC 1.1 / MIDP 2.0
-        javac -source 1.3 -target 1.3 -bootclasspath /usr/lib/jvm/temurin-8-jdk-amd64/jre/lib/rt.jar -d build/classes src/*.java || \
-        javac -source 8 -target 8 -d build/classes src/*.java
+        
+        # Compilar usando las librerías J2ME en el bootclasspath
+        javac -source 1.3 -target 1.3 \
+          -bootclasspath lib/cldcapi11.jar:lib/midpapi20.jar \
+          -d build/classes src/*.java
 
         # Crear archivo JAR con su manifiesto
         cd build/classes
@@ -36,4 +45,3 @@ jobs:
       with:
         name: nokia-e72-game
         path: rpg-nokia-e72.jar
-
